@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "wip-irc-as-slack"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1h3ayz1lwphmo"
+s3_prefix = "wip-irc-as-slack"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+profile = "restyled"

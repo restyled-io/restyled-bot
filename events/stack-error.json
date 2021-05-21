@@ -1,0 +1,12 @@
+{
+  "icon_emoji": ":cloud:",
+  "username": "CloudGenesis",
+  "channel": "${channel}",
+  "attachments": [
+    {
+      "fallback": "${message}",
+      "text": "${message}",
+      "color": "danger"
+    }
+  ]
+}
