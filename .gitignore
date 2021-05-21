@@ -1,2 +1,3 @@
-built
+.env
+dist
 node_modules
