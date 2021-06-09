@@ -26,7 +26,9 @@ export class Bot {
       console.log("Sending message");
       this.client.say(
         this.options.channel,
-        [message.title, message.body].concat(message.links).join("\n")
+        [message.title || "", message.body]
+          .concat(message.links || [])
+          .join("\n")
       );
       await IRC.sync(this.client);
       return true;

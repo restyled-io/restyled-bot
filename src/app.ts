@@ -2,8 +2,6 @@ import * as express from "express";
 import { Bot } from "./irc-bot";
 import bot from "./irc-bot";
 import { Message } from "./message";
-import { SlackBody } from "./slack";
-import * as Slack from "./slack";
 
 class App {
   public express: express.Express;
@@ -35,17 +33,6 @@ class App {
       try {
         await this.irc.reset();
         res.json({});
-      } catch (ex) {
-        next(ex);
-      }
-    });
-
-    router.post("/slack", async (req, res, next) => {
-      try {
-        const body: SlackBody = req.body;
-        const messages = Slack.toMessages(body);
-        const result = await this.irc.send(messages[0]); // TODO
-        res.json({ result });
       } catch (ex) {
         next(ex);
       }
