@@ -23,7 +23,7 @@ class App {
 
     router.post("/irc", async (req, res, next) => {
       try {
-        const message: Message = req.body.message;
+        const message: Message = req.body;
         const result = await this.irc.send(message);
         res.json({ result });
       } catch (ex) {
