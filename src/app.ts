@@ -1,6 +1,7 @@
 import * as express from "express";
 import { Bot } from "./irc-bot";
 import bot from "./irc-bot";
+import { Message } from "./message";
 import { SlackBody } from "./slack";
 import * as Slack from "./slack";
 
@@ -22,23 +23,32 @@ class App {
 
     router.post("/irc", async (req, res, next) => {
       try {
-        const result = await this.irc.send(req.body.message);
+        const message: Message = req.body.message;
+        const result = await this.irc.send(message);
         res.json({ result });
       } catch (ex) {
         next(ex);
       }
     });
 
-    router.delete("/irc", async (_req, res) => {
-      await this.irc.reset();
-      res.json({});
+    router.delete("/irc", async (_req, res, next) => {
+      try {
+        await this.irc.reset();
+        res.json({});
+      } catch (ex) {
+        next(ex);
+      }
     });
 
-    router.post("/slack", async (req, res) => {
-      const body: SlackBody = req.body;
-      const messages = Slack.toMessages(body);
-      const result = await this.irc.send(messages[0]); // TODO
-      res.json({ result });
+    router.post("/slack", async (req, res, next) => {
+      try {
+        const body: SlackBody = req.body;
+        const messages = Slack.toMessages(body);
+        const result = await this.irc.send(messages[0]); // TODO
+        res.json({ result });
+      } catch (ex) {
+        next(ex);
+      }
     });
 
     this.express.use("/", router);
