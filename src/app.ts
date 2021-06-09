@@ -20,9 +20,13 @@ class App {
       res.json({ message: "Go away, world!" });
     });
 
-    router.post("/irc", async (req, res) => {
-      const result = await this.irc.send(req.body.message);
-      res.json({ result });
+    router.post("/irc", async (req, res, next) => {
+      try {
+        const result = await this.irc.send(req.body.message);
+        res.json({ result });
+      } catch (ex) {
+        next(ex);
+      }
     });
 
     router.delete("/irc", async (_req, res) => {
